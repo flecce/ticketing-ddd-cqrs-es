@@ -29,14 +29,14 @@ namespace Infrastructure.Data.Impl
 
                 foreach (var @event in events)
                 {
-                    aggregate.ApplyEvent((IDomainEvent)@event, 1);
+                    aggregate.ApplyEvent((IDomainEvent)@event);
                 }
 
                 return aggregate;
             }
         }
 
-        public async Task SaveAsync(T aggregate)
+        public async Task<bool> SaveAsync(T aggregate)
         {
             var events = aggregate.GetUncommittedEvents();
             if (events.Count() <= 0)

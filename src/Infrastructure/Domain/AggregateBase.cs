@@ -5,20 +5,19 @@ namespace Infrastructure.Domain
 {
     public abstract class AggregateBase : IAggregate, IEventSourcingAggregate
     {
+        public Guid Id { get; protected set; }
+        public int Version { get; private set; }
         public const long NewAggregateVersion = 0;
         private long _version = NewAggregateVersion;
         private readonly ICollection<IDomainEvent> _uncommittedEvents = new LinkedList<IDomainEvent>();
 
-        public Guid Id { get; protected set; }
-        public int Version { get; private set; }
-
-        public void ApplyEvent(IDomainEvent @event, int version)
+        public void ApplyEvent(IDomainEvent @event)
         {
             if (@event == null)
                 return;
 
             ((dynamic)this).Apply((dynamic)@event);
-            _version = version;
+            _version++;
         }
 
         public void ClearUncommittedEvents()

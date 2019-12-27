@@ -61,8 +61,7 @@ namespace Ticketing.Api.Controllers
         [Route("{id}")]
         public async Task<IActionResult> GetTicketById(Guid id)
         {
-            var ticket = await _ticketRepository.GetByIdAsync(id);
-            return Ok(ticket);
+            return Ok();
         }
     }
 }
