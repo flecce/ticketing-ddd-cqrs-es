@@ -11,10 +11,17 @@ namespace Infrastructure.Data.Impl
 {
     public class EventSourcingRepository<T> : IRepository<T> where T : AggregateBase
     {
+        private readonly string _connectionString;
+
+        public EventSourcingRepository(string connectionString)
+        {
+            _connectionString = connectionString ?? throw new ArgumentException("connectionString");
+        }
+
         public async Task<T> GetByIdAsync(Guid id)
         {
             const string sql = "SELECT * FROM Events WHERE AggregateId=@id";
-            using (var connection = new SqlConnection("Server=.\\sql2017;Database=EventStore;Trusted_Connection=True;"))
+            using (var connection = new SqlConnection(_connectionString))
             {
                 var rawEvents = await connection.QueryAsync<EventData>(sql, new { id });
                 var events = rawEvents.Select(x => x.DeserializeEvent());
@@ -41,7 +48,7 @@ namespace Infrastructure.Data.Impl
                 .Select(e => e.ToEventData(aggregateType, aggregate.Id, originalVersion++))
                 .ToArray();
 
-            using (var conn = new SqlConnection("Server=.\\sql2017;Database=EventStore;Trusted_Connection=True;"))
+            using (var conn = new SqlConnection(_connectionString))
             {
                 conn.Open();
                 using (var transaction = conn.BeginTransaction())
