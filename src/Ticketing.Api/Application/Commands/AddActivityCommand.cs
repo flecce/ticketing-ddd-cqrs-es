@@ -9,7 +9,6 @@ namespace Ticketing.Api.Application.Commands
     {
         [DataMember(Name = "ticketId")]
         public Guid TicketId { get; set; }
-
         [DataMember(Name = "title")]
         public string Title { get; set; }
         [DataMember(Name = "description")]
