@@ -7,6 +7,6 @@ namespace Infrastructure.Data.Interfaces
     public interface IRepository<T> where T : IAggregate
     {
         Task<T> GetByIdAsync(Guid id);
-        Task SaveAsync(T aggregate);
+        Task<bool> SaveAsync(T aggregate);
     }
 }

@@ -72,6 +72,7 @@ namespace Infrastructure.Data.Impl
             }
 
             aggregate.ClearUncommittedEvents();
+            return true;
         }
 
         private T CreateEmptyAggregate()
