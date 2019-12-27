@@ -29,10 +29,17 @@ namespace Ticketing.Api.Infrastructure
                 .RegisterAssemblyTypes(typeof(IMediator).GetTypeInfo().Assembly)
                 .AsImplementedInterfaces();
 
-            // Register all the Command classes (they implement IRequestHandler) in assembly holding the Commands
+            // Register all the Command classes (they implement IRequestHandler) in assembly
+            // holding the Commands
             builder
                 .RegisterAssemblyTypes(typeof(CreateTicketCommand).GetTypeInfo().Assembly)
                 .AsClosedTypesOf(typeof(IRequestHandler<,>));
+
+            builder.Register<ServiceFactory>(ctx =>
+            {
+                var c = ctx.Resolve<IComponentContext>();
+                return t => c.Resolve(t);
+            });
         }
     }
 }

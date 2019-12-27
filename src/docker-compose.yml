@@ -1,0 +1,18 @@
+version: '3.4'
+
+services:
+  ticketing.api:
+    image: ${DOCKER_REGISTRY-}ticketingapi
+    build:
+      context: .
+      dockerfile: Ticketing.Api/Dockerfile
+    depends_on:
+      - db
+
+    db:
+        image: "mcr.microsoft.com/mssql/server"
+        environment:
+            SA_PASSWORD: "Password123"
+            ACCEPT_EULA: "Y"
+        ports:
+          - "1433:1433"

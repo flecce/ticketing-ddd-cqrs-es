@@ -40,7 +40,7 @@ namespace Infrastructure.Data.Impl
         {
             var events = aggregate.GetUncommittedEvents();
             if (events.Count() <= 0)
-                return;
+                return false;
 
             var aggregateType = aggregate.GetType().Name;
             var originalVersion = aggregate.Version - events.Count() + 1;
