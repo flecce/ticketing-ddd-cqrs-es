@@ -25,7 +25,7 @@ namespace Infrastructure.Domain
 			return new EventData
 			{
 				Id = eventId,
-				Created = DateTime.UtcNow,
+				Created = DateTime.Now,
 				AggregateType = aggregateType,
 				AggregateId = aggregateId,
 				Version = version,

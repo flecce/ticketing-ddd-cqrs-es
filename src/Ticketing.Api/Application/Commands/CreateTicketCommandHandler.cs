@@ -19,8 +19,6 @@ namespace Ticketing.Api.Application.Commands
         public async Task<bool> Handle(CreateTicketCommand request, CancellationToken cancellationToken)
         {
             Ticket newTicket = new Ticket(Guid.NewGuid(), request.Title);
-            newTicket.AddActivity("Init", "First step", 0);
-
             return await _ticketRepository.SaveAsync(newTicket);
         }
     }

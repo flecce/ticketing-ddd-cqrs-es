@@ -43,7 +43,7 @@ namespace Infrastructure.Data.Impl
                 return false;
 
             var aggregateType = aggregate.GetType().Name;
-            var originalVersion = aggregate.Version - events.Count() + 1;
+            var originalVersion = aggregate.Version - events.Count();
             var eventsToSave = events
                 .Select(e => e.ToEventData(aggregateType, aggregate.Id, originalVersion++))
                 .ToArray();

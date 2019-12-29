@@ -7,8 +7,6 @@ namespace Infrastructure.Domain
     {
         public Guid Id { get; protected set; }
         public int Version { get; private set; }
-        public const long NewAggregateVersion = 0;
-        private long _version = NewAggregateVersion;
         private readonly ICollection<IDomainEvent> _uncommittedEvents = new LinkedList<IDomainEvent>();
 
         public void ApplyEvent(IDomainEvent @event)
@@ -17,7 +15,7 @@ namespace Infrastructure.Domain
                 return;
 
             ((dynamic)this).Apply((dynamic)@event);
-            _version++;
+            Version++;
         }
 
         public void ClearUncommittedEvents()
@@ -32,8 +30,8 @@ namespace Infrastructure.Domain
 
         protected void RaiseEvent(IDomainEvent @event)
         {
-            _version++;
             _uncommittedEvents.Add(@event);
+            Version++;
         }
     }
 }

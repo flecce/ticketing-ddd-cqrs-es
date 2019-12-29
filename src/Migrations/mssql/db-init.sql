@@ -1,3 +1,18 @@
+USE [master]
+GO
+
+IF (EXISTS (SELECT name 
+FROM master.dbo.sysdatabases 
+WHERE ('[' + name + ']' = 'EventStore' 
+OR name = 'EventStore')))
+	set noexec on               -- prevent creation when already exists
+  
+CREATE DATABASE [EventStore];
+GO
+
+USE [EventStore]
+GO
+
 CREATE TABLE Events(
   Id uniqueidentifier not null,
   AggregateType nvarchar(100) not null,
