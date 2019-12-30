@@ -1,6 +1,4 @@
-﻿using Domain.Ticket;
-using Infrastructure.Data.Interfaces;
-using MediatR;
+﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -41,6 +39,8 @@ namespace Ticketing.Api.Controllers
             return Ok();
         }
 
+        [Route("addactivity")]
+        [HttpPost]
         public async Task<IActionResult> AddActivity(AddActivitytCommand command)
         {
             _logger.LogInformation(
@@ -57,11 +57,11 @@ namespace Ticketing.Api.Controllers
             return Ok();
         }
 
-        [HttpGet]
-        [Route("{id}")]
-        public async Task<IActionResult> GetTicketById(Guid id)
-        {
-            return Ok();
-        }
+        //[HttpGet]
+        //[Route("{id}")]
+        //public async Task<IActionResult> GetTicketById(Guid id)
+        //{
+        //    return Ok();
+        //}
     }
 }

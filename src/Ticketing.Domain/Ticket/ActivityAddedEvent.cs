@@ -1,7 +1,7 @@
 ﻿using Infrastructure.Domain;
 using System;
 
-namespace Domain.Ticket
+namespace Ticketing.Domain.Ticket
 {
     public class ActivityAddedEvent : IDomainEvent
     {

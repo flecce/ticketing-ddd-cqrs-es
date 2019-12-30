@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Domain.Ticket
+namespace Ticketing.Domain.Ticket
 {
     public class Ticket : AggregateBase
     {

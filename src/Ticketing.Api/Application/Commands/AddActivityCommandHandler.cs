@@ -1,4 +1,4 @@
-﻿using Domain.Ticket;
+﻿using Ticketing.Domain.Ticket;
 using Infrastructure.Data.Interfaces;
 using MediatR;
 using System;

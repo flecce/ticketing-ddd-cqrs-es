@@ -1,5 +1,5 @@
 ﻿using Autofac;
-using Domain.Ticket;
+using Ticketing.Domain.Ticket;
 using Infrastructure.Data.Impl;
 using Infrastructure.Data.Interfaces;
 using MediatR;

@@ -1,4 +1,4 @@
-﻿namespace Domain.Ticket
+﻿namespace Ticketing.Domain.Ticket
 {
     public class Activity
     {

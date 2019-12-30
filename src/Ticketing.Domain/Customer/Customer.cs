@@ -1,7 +1,7 @@
 ﻿using Infrastructure.Domain;
 using System;
 
-namespace Domain.Customer
+namespace Ticketing.Domain.Customer
 {
     public class Customer : AggregateBase
     {

@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29509.3
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csproj", "{C1C0BE7E-6544-400A-95E3-294928FE41CB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ticketing.Domain", "Ticketing.Domain\Ticketing.Domain.csproj", "{C1C0BE7E-6544-400A-95E3-294928FE41CB}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain.Tests", "Domain.Tests\Domain.Tests.csproj", "{8D1B5176-EED6-4141-81F9-375239FDCF55}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ticketing.Domain.Tests", "Ticketing.Domain.Tests\Ticketing.Domain.Tests.csproj", "{8D1B5176-EED6-4141-81F9-375239FDCF55}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{7D281D58-A757-4170-90F6-AE6E51B42E37}"
 EndProject
