@@ -1,4 +1,4 @@
-# Simple ASP.NET Core web application based on DDD, CQRS and EventSourcing
+# Simple ASP.NET Core web application based on DDD, CQRS and Event Sourcing
 
 The Ticketing web application is a simple example of DDD, CQRS and Event Sourcing patterns:
 
