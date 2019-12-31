@@ -1,6 +1,7 @@
 ﻿using Dapper;
 using Infrastructure.Data.Interfaces;
 using Infrastructure.Domain;
+using MediatR;
 using System;
 using System.Data.SqlClient;
 using System.Linq;
@@ -12,10 +13,14 @@ namespace Infrastructure.Data.Impl
     public class EventSourcingRepository<T> : IRepository<T> where T : AggregateBase
     {
         private readonly string _connectionString;
+        private readonly IMediator _mediator;
 
-        public EventSourcingRepository(string connectionString)
+        public EventSourcingRepository(
+            string connectionString,
+            IMediator mediator)
         {
             _connectionString = connectionString ?? throw new ArgumentException("connectionString");
+            _mediator = mediator ?? throw new ArgumentException("mediator");
         }
 
         public async Task<T> GetByIdAsync(Guid id)
@@ -70,6 +75,10 @@ namespace Infrastructure.Data.Impl
                     transaction.Commit();
                 }
             }
+
+            // Publish domain events
+            foreach (var @event in events)
+                await _mediator.Publish(@event);
 
             aggregate.ClearUncommittedEvents();
             return true;

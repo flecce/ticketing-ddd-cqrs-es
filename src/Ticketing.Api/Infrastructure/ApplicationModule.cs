@@ -19,10 +19,10 @@ namespace Ticketing.Api.Infrastructure
 
         protected override void Load(ContainerBuilder builder)
         {
-            builder
-                .Register(c => new EventSourcingRepository<Ticket>(_connectionString))
-                .As<IRepository<Ticket>>()
-                .InstancePerLifetimeScope();
+            // Repositories
+            builder.RegisterType<EventSourcingRepository<Ticket>>()
+               .As<IRepository<Ticket>>()
+               .WithParameter("connectionString", _connectionString);
 
             // Mediator
             builder
