@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Threading.Tasks;
 using Ticketing.Api.Application.Commands;
+using Ticketing.Api.Application.Queries.Interfaces;
 
 namespace Ticketing.Api.Controllers
 {
@@ -13,13 +14,16 @@ namespace Ticketing.Api.Controllers
     {
         private readonly ILogger<TicketController> _logger;
         private readonly IMediator _mediator;
+        private readonly ITicketReader _ticketReader;
 
         public TicketController(
             ILogger<TicketController> logger,
-            IMediator mediator)
+            IMediator mediator,
+            ITicketReader ticketReader)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
+            _ticketReader = ticketReader ?? throw new ArgumentNullException(nameof(ticketReader));
         }
 
         [HttpPost]
@@ -57,11 +61,11 @@ namespace Ticketing.Api.Controllers
             return Ok();
         }
 
-        //[HttpGet]
-        //[Route("{id}")]
-        //public async Task<IActionResult> GetTicketById(Guid id)
-        //{
-        //    return Ok();
-        //}
+        [HttpGet]
+        public async Task<IActionResult> GetAllTickets()
+        {
+            var result = await _ticketReader.GetTickets();
+            return Ok(result);
+        }
     }
 }

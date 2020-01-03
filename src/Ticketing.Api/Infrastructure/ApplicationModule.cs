@@ -1,10 +1,14 @@
 ﻿using Autofac;
-using Ticketing.Domain.Ticket;
 using Infrastructure.Data.Impl;
 using Infrastructure.Data.Interfaces;
 using MediatR;
 using System.Reflection;
 using Ticketing.Api.Application.Commands;
+using Ticketing.Api.Application.DomainEventHandlers;
+using Ticketing.Api.Application.Queries.Interfaces;
+using Ticketing.Api.Application.ReadModel.Impl;
+using Ticketing.Api.Application.ReadModel.Models;
+using Ticketing.Domain.Ticket;
 
 namespace Ticketing.Api.Infrastructure
 {
@@ -19,10 +23,20 @@ namespace Ticketing.Api.Infrastructure
 
         protected override void Load(ContainerBuilder builder)
         {
-            // Repositories
+            // Read repositories
+            builder.RegisterType<MongoDbRepository<TicketReadModel>>()
+               .As<IReadRepository<TicketReadModel>>();
+
+            // Write repositories
             builder.RegisterType<EventSourcingRepository<Ticket>>()
                .As<IRepository<Ticket>>()
-               .WithParameter("connectionString", _connectionString);
+               .WithParameter("connectionString", _connectionString)
+               .InstancePerLifetimeScope();
+
+            // Readers
+            builder.RegisterType<TicketReader>()
+               .As<ITicketReader>()
+               .InstancePerLifetimeScope();
 
             // Mediator
             builder
@@ -34,6 +48,11 @@ namespace Ticketing.Api.Infrastructure
             builder
                 .RegisterAssemblyTypes(typeof(CreateTicketCommand).GetTypeInfo().Assembly)
                 .AsClosedTypesOf(typeof(IRequestHandler<,>));
+
+            // Register the DomainEventHandler classes (they implement INotificationHandler<>) in assembly holding the Domain Events
+            builder
+                .RegisterAssemblyTypes(typeof(TicketCreatedDomainEventHandler).GetTypeInfo().Assembly)
+                .AsClosedTypesOf(typeof(INotificationHandler<>));
 
             builder.Register<ServiceFactory>(ctx =>
             {

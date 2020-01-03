@@ -7,14 +7,15 @@ services:
             dockerfile: Ticketing.Api/Dockerfile
         depends_on:
             - db
+            - mongo
     db:
         image: mcr.microsoft.com/mssql/server
         environment:
             SA_PASSWORD: "Password123"
             ACCEPT_EULA: "Y"
         volumes:
-            - ./Migrations/scripts:/scripts/
-            - ./Migrations/data:/var/opt/mssql/data
+            - ./Migrations/scripts/mssql:/scripts/
+            - ./Migrations/data/mssql:/var/opt/mssql/data
         ports:
             - '1433:1433'
         command:
@@ -31,3 +32,14 @@ services:
               done
               # So that the container doesn't shut down, sleep this thread
               sleep infinity
+    mongo:
+        image: 'mongo'
+        environment:
+            - MONGO_INITDB_DATABASE=TicketingReadDb
+        volumes:
+            - mongodb_data:/data/db
+        ports:
+            - '27017-27019:27017-27019'
+volumes:
+    mongodb_data:
+        driver: local

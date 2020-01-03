@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using MongoDB.Driver;
 using Ticketing.Api.Infrastructure;
 
 namespace Ticketing.Api
@@ -20,6 +21,9 @@ namespace Ticketing.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton<IMongoClient>(x => new MongoClient(Configuration.GetConnectionString("mongo")));
+            services.AddTransient<IMongoDatabase>(x => x.GetService<IMongoClient>().GetDatabase("TicketingReadDb"));
+
             services.AddControllers();
 
             // Register the Swagger generator, defining 1 or more Swagger documents
@@ -31,7 +35,7 @@ namespace Ticketing.Api
 
         public void ConfigureContainer(ContainerBuilder builder)
         {
-            builder.RegisterModule(new ApplicationModule(Configuration.GetConnectionString("DefaultConnection")));
+            builder.RegisterModule(new ApplicationModule(Configuration.GetConnectionString("eventSourcing")));
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

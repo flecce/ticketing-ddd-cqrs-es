@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Infrastructure.Data.Interfaces;
+using System;
 using System.Runtime.Serialization;
 
-namespace Ticketing.Api.Application.Queries.ViewModels
+namespace Ticketing.Api.Application.ReadModel.Models
 {
     [DataContract]
-    public class TicketViewModel
+    public class TicketReadModel : IReadEntity
     {
         [DataMember(Name = "id")]
         public Guid Id { get; set; }
