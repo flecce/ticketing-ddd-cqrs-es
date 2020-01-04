@@ -1,5 +1,6 @@
 ﻿using Infrastructure.Data.Interfaces;
 using System;
+using System.Collections.Generic;
 using System.Runtime.Serialization;
 
 namespace Ticketing.Api.Application.ReadModel.Models
@@ -13,5 +14,18 @@ namespace Ticketing.Api.Application.ReadModel.Models
         public string Title { get; set; }
         [DataMember(Name = "description")]
         public string Description { get; set; }
+        [DataMember(Name = "activities")]
+        public List<ActivityReadModel> Activities { get; set; }
+    }
+
+    [DataContract]
+    public class ActivityReadModel
+    {
+        [DataMember(Name = "title")]
+        public string Title { get; set; }
+        [DataMember(Name = "description")]
+        public string Description { get; set; }
+        [DataMember(Name = "effort")]
+        public int Effort { get; set; }
     }
 }
