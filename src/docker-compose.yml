@@ -28,7 +28,7 @@ services:
               sleep 30
               # Run every script in /scripts
               for script in /scripts/*.sql
-                do /opt/mssql-tools/bin/sqlcmd -U sa -P $$SA_PASSWORD -l 30 -e -i script
+                do /opt/mssql-tools/bin/sqlcmd -U sa -P $$SA_PASSWORD -l 30 -e -i $$script
               done
               # So that the container doesn't shut down, sleep this thread
               sleep infinity
