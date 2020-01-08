@@ -17,7 +17,7 @@ services:
             - ./Migrations/scripts/mssql:/scripts/
             - ./Migrations/data/mssql:/var/opt/mssql/data
         ports:
-            - '1433:1433'
+            - '4433:1433'
         command:
             - /bin/bash
             - -c
